@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="root" fx:id="parent" prefHeight="609.0" prefWidth="982.0"
+            stylesheets="@application.css" xmlns="http://javafx.com/javafx/22"
+            fx:controller="application.SceneController">
+    <children>
+        <Label layoutX="407.0" layoutY="88.0" prefHeight="75.0" prefWidth="168.0" text="Continue As"
+               textAlignment="CENTER" textFill="#676767">
+            <font>
+                <Font name="Arial" size="23.0"/>
+            </font>
+        </Label>
+        <Button fx:id="userButton" layoutX="173.0" layoutY="316.0" mnemonicParsing="false" onAction="#switchUserScreen"
+                prefHeight="103.0" prefWidth="241.0" styleClass="blue" text="USER">
+            <graphic>
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/userIcon.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="adminButton" layoutX="590.0" layoutY="316.0" mnemonicParsing="false"
+                onAction="#switchAdminScreen" prefHeight="103.0" prefWidth="241.0" styleClass="blue" text="ADMIN">
+            <graphic>
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/admin.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="exitProgram" layoutX="909.0" layoutY="534.0" mnemonicParsing="false" onAction="#exitProgram"
+                prefHeight="60.0" prefWidth="57.0" styleClass="back">
+            <graphic>
+                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/exitIcon.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Hyperlink fx:id="gitLink" layoutX="60.0" layoutY="540.0" onAction="#openGitHub" prefHeight="60.0"
+                   prefWidth="109.0" text="GitHub" textFill="#FFFFFF">
+            <font>
+                <Font name="Arial" size="14.0"/>
+            </font>
+        </Hyperlink>
+        <Button fx:id="darkWhiteButton" layoutX="863.0" layoutY="10.0" mnemonicParsing="false" onAction="#changeMode"
+                opacity="0.8" prefHeight="40.0" prefWidth="40.0" styleClass="modeButton">
+            <graphic>
+                <ImageView fx:id="imgMode" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/darkMode.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Label layoutX="265.0" layoutY="192.0" prefHeight="75.0" prefWidth="453.0" text="WELCOME TO THE LIBRARY"
+               textAlignment="CENTER" textFill="#e4e4e4">
+            <font>
+                <Font name="Arial Bold" size="26.0"/>
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
