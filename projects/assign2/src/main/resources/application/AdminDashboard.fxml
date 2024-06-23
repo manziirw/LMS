@@ -1,0 +1,25 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="application.Controllers.AdminDashboardController">
+
+    <TextField fx:id="bookTitleField" promptText="Book Title"/>
+    <TextField fx:id="authorField" promptText="Author"/>
+    <Button text="Add Book" onAction="#addBook"/>
+    <Button text="Edit Book" onAction="#editBook"/>
+    <Button text="Delete Book" onAction="#deleteBook"/>
+    <Button text="Lend Book" onAction="#lendBook"/>
+
+    <TableView fx:id="bookTableView">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID"/>
+            <TableColumn fx:id="titleColumn" text="Title"/>
+            <TableColumn fx:id="authorColumn" text="Author"/>
+        </columns>
+    </TableView>
+</VBox>

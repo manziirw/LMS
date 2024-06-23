@@ -34,6 +34,7 @@ public class LoginController {
             connection = DatabaseUtil.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
+            showErrorAlert("Database connection error!");
         }
     }
 
@@ -42,8 +43,8 @@ public class LoginController {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        // Query to check credentials
-        String query = "SELECT * FROM user WHERE username = ? AND password = ?";
+        // Query to check credentials and role
+        String query = "SELECT role FROM user WHERE username = ? AND password = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, username);
@@ -51,15 +52,24 @@ public class LoginController {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // User found, login successful
-                showInfoAlert("Login successful!");
-                // Optionally, navigate to main screen or perform other actions
+                String role = resultSet.getString("role");
+
+                if ("admin".equals(role)) {
+                    // Admin login successful
+                    showInfoAlert("Admin login successful!");
+                    navigateToAdminDashboard();
+                } else {
+                    // Normal user login successful
+                    showInfoAlert("User login successful!");
+                    navigateToHomeScreen();
+                }
             } else {
                 // Invalid credentials
                 showErrorAlert("Invalid username or password!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showErrorAlert("Error logging in. Please try again.");
         }
     }
 
@@ -71,6 +81,30 @@ public class LoginController {
             stage.setScene(new Scene(root, 400, 400));
         } catch (IOException e) {
             e.printStackTrace();
+            showErrorAlert("Error loading sign up page!");
+        }
+    }
+
+    private void navigateToAdminDashboard() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/application/AdminDashboard.fxml"));
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600)); // Adjust dimensions as needed
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorAlert("Error loading admin dashboard!");
+        }
+    }
+
+    private void navigateToHomeScreen() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/application/HomeScreen.fxml"));
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600)); // Adjust dimensions as needed
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorAlert("Error loading home screen! " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
