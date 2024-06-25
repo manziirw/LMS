@@ -3,23 +3,26 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="application.Controllers.AdminDashboardController">
+      fx:controller="application.Controllers.AdminDashboardController"
+      stylesheets="@Admin.css">
 
-    <TextField fx:id="bookTitleField" promptText="Book Title"/>
-    <TextField fx:id="authorField" promptText="Author"/>
-    <Button text="Add Book" onAction="#addBook"/>
-    <Button text="Edit Book" onAction="#editBook"/>
-    <Button text="Delete Book" onAction="#deleteBook"/>
-    <Button text="Lend Book" onAction="#lendBook"/>
-
-    <TableView fx:id="bookTableView">
+    <!-- Book Input Fields -->
+    <HBox spacing="10">
+        <TextField fx:id="bookTitleField" promptText="Book Title"/>
+        <TextField fx:id="authorField" promptText="Author"/>
+        <Button text="Add Book" onAction="#addBook"/>
+        <Button text="Edit Book" onAction="#editBook"/>
+        <Button text="Delete Book" onAction="#deleteBook"/>
+    </HBox>
+    <!-- Book Table -->
+    <TableView fx:id="bookTableView" onMouseClicked="#loadSelectedBook">
         <columns>
-            <TableColumn fx:id="idColumn" text="ID"/>
-            <TableColumn fx:id="titleColumn" text="Title"/>
-            <TableColumn fx:id="authorColumn" text="Author"/>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="titleColumn" text="Title" prefWidth="150"/>
+            <TableColumn fx:id="authorColumn" text="Author" prefWidth="200"/>
         </columns>
     </TableView>
 </VBox>

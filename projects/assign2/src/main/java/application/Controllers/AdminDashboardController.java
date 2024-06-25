@@ -26,6 +26,12 @@ public class AdminDashboardController {
     private TextField authorField;
 
     @FXML
+    private TextField userIdField;
+
+    @FXML
+    private TextField lendDateField;
+
+    @FXML
     private Button addBookButton;
 
     @FXML
@@ -126,18 +132,76 @@ public class AdminDashboardController {
 
     @FXML
     void editBook() {
-        // Implement edit book functionality
+        Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
+        if (selectedBook == null) {
+            showErrorAlert("No book selected for editing!");
+            return;
+        }
+
+        String newTitle = bookTitleField.getText().trim();
+        String newAuthor = authorField.getText().trim();
+
+        if (newTitle.isEmpty() || newAuthor.isEmpty()) {
+            showErrorAlert("Title and author fields cannot be empty!");
+            return;
+        }
+
+        String updateQuery = "UPDATE book SET title = ?, author = ? WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(updateQuery);
+            statement.setString(1, newTitle);
+            statement.setString(2, newAuthor);
+            statement.setInt(3, selectedBook.getId());
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                showInfoAlert("Book updated successfully!");
+                loadBooks(); // Refresh the book list after editing the book
+            } else {
+                showErrorAlert("Failed to update book!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showErrorAlert("Error updating book: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void loadSelectedBook() {
+        Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
+        if (selectedBook != null) {
+            bookTitleField.setText(selectedBook.getTitle());
+            authorField.setText(selectedBook.getAuthor());
+        }
     }
 
     @FXML
     void deleteBook() {
-        // Implement delete book functionality
+        Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
+        if (selectedBook == null) {
+            showErrorAlert("No book selected for deletion!");
+            return;
+        }
+
+        String deleteQuery = "DELETE FROM book WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(deleteQuery);
+            statement.setInt(1, selectedBook.getId());
+            int rowsDeleted = statement.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                showInfoAlert("Book deleted successfully!");
+                loadBooks(); // Refresh the book list after deleting the book
+            } else {
+                showErrorAlert("Failed to delete book!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showErrorAlert("Error deleting book: " + e.getMessage());
+        }
     }
 
     @FXML
-    void lendBook() {
-        // Implement lend book functionality
-    }
 
     private void showInfoAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
